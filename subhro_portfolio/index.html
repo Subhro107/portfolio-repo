@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Subhro Maitra | Portfolio</title>
     <meta name="description" content="Subhro Maitra - Computer Science Student and Aspiring Software Engineer">
     <meta name="keywords" content="Subhro Maitra, Portfolio, Software Development, Computer Science">
@@ -10,24 +10,27 @@
     <meta property="og:title" content="Subhro Maitra | Portfolio">
     <meta property="og:description" content="Computer Science Student and Aspiring Software Engineer">
     <meta property="og:image" content="assets/images/profile.jpg">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.ico">
+
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="dark-theme">
     <header id="home">
         <div class="hero">
-            <h1>Subhro Maitra</h1>
-            <p>Portfolio</p>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+                    </div>
     </header>
+
+    <nav class="floating-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
 
     <main>
         <div class="hero-section">
@@ -36,27 +39,35 @@
                     <img src="assets/images/profile.jpg" alt="Subhro Maitra" class="profile-img" loading="lazy">
                 </div>
             </div>
+            
             <div class="tagline">
-                <h2 class="typing-animation">"Code that solves problems, not creates them"</h2>
+                <h2>
+                    <span class="greeting">Hi, I'm</span> 
+                    <span class="name">Subhro</span>
+                    <span class="greeting"></span><br>
+                    <span class="action">I Code</span>
+                </h2>
             </div>
         </div>
 
         <section id="about">
-            <h2>About Me</h2>
-            <p>I’m a second-year Computer Science student with a growing interest in building clean, reliable, and well-structured software. I enjoy learning how things work behind the scenes — whether it’s through writing low-level code in C, working on backend logic, or experimenting with tools like Python and Git. I’m still early in my journey, but I focus on understanding the fundamentals and writing code that makes sense, not just code that works. I value clarity, simplicity, and asking the right questions. For me, it’s not about chasing trends — it’s about building real skills and writing better code, one step at a time.</p>
+            <div class="about-container">
+                <h2>About Me</h2>
+                <p>Hi - I'm Subhro Maitra, a techie who loves creating functional and visually appealing websites. My focus is on developing reliable, high-performance solutions that make a difference for both users and businesses.</p>
+            </div>
         </section>
 
         <section id="skills">
             <h2>Skills</h2>
             <ul class="skills-list">
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" width="32" height="32"> HTML</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" width="32" height="32"> CSS</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="32" height="32"> JavaScript</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="32" height="32"> Python</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" width="32" height="32"> C</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" width="32" height="32"> SQL</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" width="32" height="32"> Git</li>
-                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" width="32" height="32"> Linux</li>
+                <li><img src="assets\svg\htmllogo.svg" alt="HTML" width="32" height="32"> HTML</li>
+                <li><img src="assets\svg\csslogo.svg" alt="CSS" width="32" height="32"> CSS</li>
+                <li><img src="assets/svg/javascriptlogo.svg" alt="JavaScript" width="32" height="32"> JavaScript</li>
+                <li><img src="assets/svg/pythonlogo.svg" alt="Python" width="32" height="32"> Python</li>
+                <li><img src="assets/svg/clogo.svg" alt="C" width="32" height="32"> C</li>
+                <li><img src="assets/svg/mysqllogo.svg" alt="SQL" width="32" height="32"> SQL</li>
+                <li><img src="assets/svg/gitlogo.svg" alt="Git" width="32" height="32"> Git</li>
+                <li><img src="assets/svg/linuxlogo.svg" alt="Linux" width="32" height="32"> Linux</li>
             </ul>
         </section>
     </main>

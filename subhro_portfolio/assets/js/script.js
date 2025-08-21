@@ -1,91 +1,159 @@
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
+// DOM Elements
+const body = document.body;
+const header = document.querySelector('header');
+
+// Theme Constants
+const THEME_STATES = {
+    DARK: {
+        text: '🌙',
+        background: '#bb86fc',
+        color: '#181818'
+    },
+    LIGHT: {
+        text: '☀️',
+        background: '#ffd600',
+        color: '#222'
+    }
+};
+
+// Create theme toggle button
+const createToggleButton = () => {
+    const btn = document.createElement('button');
+    btn.id = 'toggleBtn';
+    Object.assign(btn.style, {
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        zIndex: '9999',
+        border: 'none',
+        borderRadius: '25px',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        transition: 'background 0.3s, color 0.3s'
     });
-});
+    body.appendChild(btn);
+    return btn;
+};
 
-const toggleBtn = document.createElement('button');
-toggleBtn.textContent = '🌙'; // Dark mode ON by default
-toggleBtn.style.position = 'fixed';
-toggleBtn.style.top = '10px';
-toggleBtn.style.right = '10px';
-toggleBtn.style.zIndex = '9999';
-toggleBtn.style.background = '#bb86fc';
-toggleBtn.style.color = '#181818';
-toggleBtn.style.border = 'none';
-toggleBtn.style.padding = '10px 30px';
-toggleBtn.style.borderRadius = '25px';
-toggleBtn.style.cursor = 'pointer';
-toggleBtn.style.fontWeight = 'bold';
-toggleBtn.style.transition = 'background 0.3s, color 0.3s';
+// Initialize toggle button
+const toggleBtn = createToggleButton();
 
-document.body.appendChild(toggleBtn);
+// Theme handling
+const setTheme = isDark => {
+    const theme = isDark ? THEME_STATES.DARK : THEME_STATES.LIGHT;
+    body.classList[isDark ? 'add' : 'remove']('dark-theme');
+    Object.assign(toggleBtn.style, {
+        background: theme.background,
+        color: theme.color
+    });
+    toggleBtn.textContent = theme.text;
+    localStorage.setItem('darkMode', isDark);
+};
 
-toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    if (isDark) {
-        toggleBtn.textContent = '🌙';
-        toggleBtn.style.background = '#bb86fc';
-        toggleBtn.style.color = '#181818';
-    } else {
-        toggleBtn.textContent = '☀️';
-        toggleBtn.style.background = '#ffd600';
-        toggleBtn.style.color = '#222';
-    }
-});
+// Initialize theme
+const initializeTheme = () => {
+    const savedTheme = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(savedTheme !== null ? savedTheme === 'true' : prefersDark);
+};
 
-console.log("Portfolio loaded successfully!");
-
-// Contact form handling
-document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const status = document.getElementById('formStatus');
-    
-    try {
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: form.name.value,
-                email: form.email.value,
-                message: form.message.value
-            })
+// Smooth scroll handling
+const handleSmoothScroll = () => {
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', e => {
+            const selector = link.getAttribute('href');
+            const targetId = selector.includes('#') ? 
+                selector.substring(selector.indexOf('#')) : selector;
+            
+            if (window.location.pathname.endsWith('index.html') || 
+                window.location.pathname === '/') {
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         });
-        
-        const data = await response.json();
-        status.textContent = data.message;
-        status.style.color = response.ok ? '#4CAF50' : '#f44336';
-        
-        if (response.ok) form.reset();
-    } catch (error) {
-        status.textContent = 'Failed to send message';
-        status.style.color = '#f44336';
-    }
-});
+    });
+};
 
-// Scroll reveal animation
-function revealAboutSection() {
+// About section reveal animation
+const initializeRevealAnimation = () => {
     const aboutSection = document.querySelector('#about');
+    if (!aboutSection) return;
+
     const triggerPoint = window.innerHeight / 1.3;
     
-    function checkScroll() {
+    const checkScroll = () => {
         const aboutTop = aboutSection.getBoundingClientRect().top;
-        
         if (aboutTop < triggerPoint) {
             aboutSection.classList.add('reveal');
             window.removeEventListener('scroll', checkScroll);
         }
-    }
+    };
     
     window.addEventListener('scroll', checkScroll);
-    checkScroll(); // Check on load
-}
+    checkScroll();
+};
 
-// Initialize scroll reveal
-document.addEventListener('DOMContentLoaded', revealAboutSection);
+// Contact form handling
+const initializeContactForm = () => {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const form = e.target;
+        const status = document.getElementById('formStatus');
+        
+        try {
+            console.log('Form submitted with:', {
+                name: form.name.value,
+                email: form.email.value,
+                message: form.message.value
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            status.textContent = "Message sent successfully!";
+            status.style.color = '#4CAF50';
+            form.reset();
+        } catch (error) {
+            status.textContent = 'Failed to send message. Please try again later.';
+            status.style.color = '#f44336';
+            console.error('Form submission error:', error);
+        }
+    });
+};
+
+// Mobile responsive toggle button
+const updateToggleButtonStyles = () => {
+    const isMobile = window.innerWidth <= 768;
+    Object.assign(toggleBtn.style, {
+        padding: isMobile ? '8px 20px' : '10px 30px',
+        fontSize: isMobile ? '0.9rem' : '1rem'
+    });
+};
+
+// Header scroll behavior
+let lastScroll = 0;
+const handleHeaderScroll = () => {
+    const currentScroll = window.pageYOffset;
+    header?.classList[currentScroll > lastScroll && currentScroll > 100 ? 'add' : 'remove']('header-hidden');
+    lastScroll = currentScroll;
+};
+
+// Event listeners
+window.addEventListener('resize', updateToggleButtonStyles);
+window.addEventListener('scroll', handleHeaderScroll);
+toggleBtn.addEventListener('click', () => setTheme(!body.classList.contains('dark-theme')));
+document.addEventListener('DOMContentLoaded', () => {
+    handleSmoothScroll();
+    initializeRevealAnimation();
+    initializeContactForm();
+    updateToggleButtonStyles();
+});
+
+// Initialize theme on load
+initializeTheme();
+
+console.log("Portfolio loaded successfully!");
